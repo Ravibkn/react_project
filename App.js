@@ -16,7 +16,7 @@ setCurrent(false)
       <Text style={styles.text}>Programing With {name}</Text>
       <Text style={styles.text}>Number is = {session.number} This Is {session.title}</Text>
       <Text style={styles.text}>{current? 'Current Session': 'Next Session'}</Text>
-      <Button title='Login' onPress={onClickedHendelar}></Button>
+      <Button title='Update State' onPress={onClickedHendelar}></Button>
     </View>
   )
 }
