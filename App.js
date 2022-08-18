@@ -1,12 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, StyleSheet, Button, Linking } from 'react-native'
 
 
 const App = () => {
+  const [name, setName] = useState('Ravi')
+  const [session,setSession]=useState({number:6,title:'State Less'})
+  const [current,setCurrent]=useState(true)
+  const onClickedHendelar = () => {
+    setName('Monu')
+setSession({number:7,title:'State Full'})
+setCurrent(false)
+  }
   return (
     <View style={styles.body}>
-      <Text style={styles.text}>Programing With Monu</Text>
-      <Button title='Login' onPress={() => { Linking.openURL('https://www.youtube.com/watch?v=ANdSdIlgsEw&list=PLJQbNrpYMOD5WE1kNfdgakkqzUNymtjlS&index=29&t=2027s') }}></Button>
+      <Text style={styles.text}>Programing With {name}</Text>
+      <Text style={styles.text}>Number is = {session.number} This Is {session.title}</Text>
+      <Text style={styles.text}>{current? 'Current Session': 'Next Session'}</Text>
+      <Button title='Login' onPress={onClickedHendelar}></Button>
     </View>
   )
 }
@@ -22,7 +32,7 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 20,
     color: 'white',
-    margin:10,
+    margin: 10,
   }
 })
 
