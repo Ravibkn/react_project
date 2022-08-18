@@ -4,35 +4,47 @@ import { View, Text, StyleSheet, Button, Linking } from 'react-native'
 
 const App = () => {
   const [name, setName] = useState('Ravi')
-  const [session,setSession]=useState({number:6,title:'State Less'})
-  const [current,setCurrent]=useState(true)
+
   const onClickedHendelar = () => {
     setName('Monu')
-setSession({number:7,title:'State Full'})
-setCurrent(false)
+
   }
   return (
     <View style={styles.body}>
       <Text style={styles.text}>Programing With {name}</Text>
-      <Text style={styles.text}>Number is = {session.number} This Is {session.title}</Text>
-      <Text style={styles.text}>{current? 'Current Session': 'Next Session'}</Text>
-      <Button title='Login' onPress={onClickedHendelar}></Button>
+      <View style={styles.button}>
+        <Button title='Updte State' onPress={onClickedHendelar}></Button>
+      </View>
+
     </View>
   )
 }
 
 const styles = StyleSheet.create({
   body: {
-    flex: 1,
+    // flex: 1,
+    width: '100%',
+    height: '50%',
     backgroundColor: 'green',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    borderWidth: 10,
+    borderColor: 'red',
+    borderRadius: 40,
+
+    // margin:40,
+
 
   },
   text: {
     fontSize: 20,
     color: 'white',
     margin: 10,
+  },
+  button:{
+    width:200,
+    height:60,
+    borderRadius:10,
   }
 })
 
