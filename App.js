@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, Button, ScrollView } from 'react-native'
+import { View, Text, StyleSheet, ScrollView, Button, RefreshControl } from 'react-native'
 
 
 const App = () => {
@@ -15,44 +15,56 @@ const App = () => {
     { key: 8, item: 'item 8' },
     { key: 9, item: 'item 9' },
     { key: 10, item: 'item 10' },
-    { key: 11, item: 'item 11' },
-
+    { key: 11, item: 'item 11' }, 
+    { key: 12, item: 'item 12' },
+    { key: 13, item: 'item 13' },
+    { key: 14, item: 'item 14' },
   ])
-
+const [refreshing,setRefreshing]=useState(false)
+const onRefresh =()=>{
+  setRefreshing(true);
+  setItems([...items,{key:69,item:'item 69'}]);
+  setRefreshing(false);
+}
   return (
-
-    <ScrollView  style={styles.body}>
+      <ScrollView style={styles.body}
+      refreshControl={
+        <RefreshControl
+        refreshing={refreshing}
+        onRefresh={onRefresh}/>
+      }>
       {
-        items.map((i) => {
-          return (
-            <View style={styles.item} key={i.key}>
-              <Text style={styles.text}>{i.item}</Text>
-            </View>
-          )
-        })
+       items.map((i)=>{
+        return (
+          <View style={styles.item}key={i.key}>
+        <Text style={styles.text}>{i.item}</Text>
+      </View>
+        )
+       })
       }
-    </ScrollView>
-
+      </ScrollView>
+    
   )
 }
 
+
 const styles = StyleSheet.create({
   body: {
-   
-    backgroundColor: '#ffff',
-
+    flex: 1,
+    flexDirection: 'column',
+    backgroundColor: '#fff',
   },
   item: {
-    margin: 10,
-    backgroundColor: 'blue',
-    alignItems: 'center',
+    margin:10,
+    backgroundColor: '#4ae1fa',
     justifyContent: 'center',
-
+    alignItems: 'center',
   },
   text: {
     fontSize: 35,
-    color: '#000000',
+    color: '#000',
     margin: 10,
+    fontStyle: 'italic',
   }
 })
 
