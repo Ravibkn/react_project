@@ -1,8 +1,12 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, ScrollView, RefreshControl, FlatList, SectionList, TextInput } from 'react-native'
+import { View, Text, StyleSheet, ScrollView, Button, RefreshControl, FlatList, SectionList, TextInput, Touchable, TouchableOpacity, TouchableHighlight, TouchableNativeFeedback, Pressable } from 'react-native'
 
 const App = () => {
   const [name, setName] = useState('')
+  const [submited, setSubmited] = useState(false)
+  const onPrssedHendler = () => {
+    setSubmited(!submited)
+  }
   return (
     <View style={styles.body}>
       <Text style={styles.text}>Plese Enter Name:</Text>
@@ -11,10 +15,51 @@ const App = () => {
         onChangeText={(value) => setName(value)}
         keyboardType='numbers-and-punctuation'
         secureTextEntry
-        >
+      >
       </TextInput>
-      <Text style={styles.text}>Your Name Is:{name}
-      </Text>
+      {/* <Button title={submited ? 'clear' : 'Submit'}
+        onPress={onPrssedHendler}
+        color='#00f'>
+      </Button> */}
+      {/* <TouchableOpacity
+      style={styles.button}
+      onPress={onPrssedHendler}
+      >
+        <Text style={styles.text}>{submited? 'clear':'Submit'}</Text>
+      </TouchableOpacity> */}
+      {/* <TouchableHighlight
+      style={styles.button}
+      onPress={onPrssedHendler}
+      underlayColor='#dddddd'
+      >
+        <Text style={styles.text}>{submited? 'clear':'Submit'}</Text>
+      </TouchableHighlight> */}
+      {/* <TouchableNativeFeedback
+     
+      onPress={onPrssedHendler}
+      underlayColor='#dddddd'
+      >
+        <View  style={styles.button}>
+        <Text style={styles.text}>{submited? 'clear':'Submit'}</Text>
+        </View>
+       
+      </TouchableNativeFeedback> */}
+
+      <Pressable
+        onPress={onPrssedHendler}
+        android_ripple={{color:'#00f'}}
+        style={({ pressed }) => [{ backgroundColor: pressed ? '#dddddd' : 'green' },
+        styles.button]}>
+
+        <Text style={styles.text}>{submited ? 'clear' : 'Submit'}</Text>
+      </Pressable>
+
+
+      {submited ? <Text style={styles.text}>
+        Your Name Is:{name}
+      </Text> : null
+      }
+
     </View>
   )
 }
@@ -31,6 +76,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     textAlign: 'center',
     fontSize: 20,
+    margin: 10,
   },
   item: {
     margin: 10,
@@ -44,6 +90,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     color: '#000',
     margin: 10,
+  },
+  button: {
+    backgroundColor: 'green',
+    width: 150,
+    height: 50,
+    alignItems: 'center',
   }
 })
 
