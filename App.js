@@ -1,11 +1,22 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, ScrollView, Button, RefreshControl, FlatList, SectionList, TextInput, Touchable, TouchableOpacity, TouchableHighlight, TouchableNativeFeedback, Pressable } from 'react-native'
+import { View, Text, StyleSheet, ScrollView, Button, RefreshControl, FlatList, SectionList, TextInput, Touchable, TouchableOpacity, TouchableHighlight, TouchableNativeFeedback, Pressable, Alert, ToastAndroid } from 'react-native'
 
 const App = () => {
   const [name, setName] = useState('')
   const [submited, setSubmited] = useState(false)
   const onPrssedHendler = () => {
-    setSubmited(!submited)
+    if (name.length > 3) { setSubmited(!submited); }
+    else {
+      // Alert.alert('Warning', 'The Name must be longer then 3 characters', [
+      //   { text: 'do not show again', onPress: () => console.warn('do not show again Pressed') },
+      //   { text: 'cancel', onPress: () => console.warn('cancel Pressed') },
+      //   { text: 'ok', onPress: () => console.warn('ok Pressed') }
+      // ],
+      //   { cancelable: true, onDismiss: () => console.warn('Alert dissmiss') })
+      ToastAndroid.showWithGravity('The Name must be longer then 3 characters',
+        ToastAndroid.SHORT,
+        ToastAndroid.CENTER)
+    }
   }
   return (
     <View style={styles.body}>
@@ -47,7 +58,7 @@ const App = () => {
 
       <Pressable
         onPress={onPrssedHendler}
-        android_ripple={{color:'#00f'}}
+        android_ripple={{ color: '#00f' }}
         style={({ pressed }) => [{ backgroundColor: pressed ? '#dddddd' : 'green' },
         styles.button]}>
 
