@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, ScrollView, RefreshControl, FlatList } from 'react-native'
+import { View, Text, StyleSheet, ScrollView, RefreshControl, FlatList, SectionList } from 'react-native'
 
 const App = () => {
 
@@ -18,6 +18,23 @@ const App = () => {
     { name: 'item 12' },
 
   ]);
+  const DATA = [
+    {
+      title: 'Title 1',
+      data: ['item 1-1', 'item 1-2', 'item 1-3'],
+    },
+    {
+      title: 'Title 2',
+      data: ['item 2-1', 'item 2-2', 'item 2-3'],
+    }, {
+      title: 'Title 3',
+      data: ['item 3-1', 'item 3-2', 'item 3-3'],
+    }, {
+      title: 'Title 4',
+      data: ['item 4-1', 'item 4-2', 'item 4-3'],
+    }
+  ]
+
   const [Refreshing, setRefreshing] = useState(false)
   const onRefresh = () => {
     setItems([...items, { name: 'item 69' }])
@@ -26,24 +43,40 @@ const App = () => {
 
 
   return (
-  
-    <FlatList 
- 
+
+    <SectionList 
+    sections={DATA}
     keyExtractor={(item, index) => index.toString()}
-    data={items}
     renderItem={({item}) =>(
-      <View style={styles.item}>
-     <Text style={styles.text}>{item.name}</Text>
-        </View>
-    )}   
-    refreshControl={
-          <RefreshControl
-            refreshing={Refreshing}
-            onRefresh={onRefresh} />
-  
-        }
-   />
       
+       <Text style={styles.text}>{item}</Text>
+          
+           )
+    }
+    renderSectionHeader={({section}) =>(
+      <View style={styles.item}>
+       <Text style={styles.text}>{section.title}</Text>
+           </View>
+    )}
+    />
+
+    //   <FlatList 
+
+    //   keyExtractor={(item, index) => index.toString()}
+    //   data={items}
+    //   renderItem={({item}) =>(
+    //     <View style={styles.item}>
+    //    <Text style={styles.text}>{item.name}</Text>
+    //       </View>
+    //   )}   
+    //   refreshControl={
+    //         <RefreshControl
+    //           refreshing={Refreshing}
+    //           onRefresh={onRefresh} />
+
+    //       }
+    //  />
+
     // <FlatList
     //   keyExtractor={(item, index) => index.toString()}
     //   data={Items}
