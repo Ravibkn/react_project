@@ -1,25 +1,59 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, ScrollView, Button, RefreshControl, FlatList, SectionList, TextInput, Touchable, TouchableOpacity, TouchableHighlight, TouchableNativeFeedback, Pressable, Alert, ToastAndroid } from 'react-native'
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  Button,
+  RefreshControl,
+  FlatList,
+  SectionList,
+  TextInput, Touchable,
+  TouchableOpacity,
+  TouchableHighlight,
+  TouchableNativeFeedback,
+  Pressable,
+  Alert,
+  ToastAndroid,
+  Modal
+} from 'react-native'
 
 const App = () => {
   const [name, setName] = useState('')
   const [submited, setSubmited] = useState(false)
+  const [showWarning, setShowWarning] = useState(false)
   const onPrssedHendler = () => {
     if (name.length > 3) { setSubmited(!submited); }
     else {
-      // Alert.alert('Warning', 'The Name must be longer then 3 characters', [
-      //   { text: 'do not show again', onPress: () => console.warn('do not show again Pressed') },
-      //   { text: 'cancel', onPress: () => console.warn('cancel Pressed') },
-      //   { text: 'ok', onPress: () => console.warn('ok Pressed') }
-      // ],
-      //   { cancelable: true, onDismiss: () => console.warn('Alert dissmiss') })
-      ToastAndroid.showWithGravity('The Name must be longer then 3 characters',
-        ToastAndroid.SHORT,
-        ToastAndroid.CENTER)
+      setShowWarning(true)
     }
   }
   return (
     <View style={styles.body}>
+      <Modal
+        visible={showWarning}
+        transparent
+        onRequestClose={() => setShowWarning(false)}
+        animationType='slide'
+        hardwareAccelerated
+      >
+        <View style={styles.centerpage_view}>
+          <View style={styles.warning_modal}>
+            <View style={styles.warning_title}><Text style={styles.text}>Warning!</Text>
+            </View>
+            <View style={styles.warning_body}>
+              <Text style={styles.text}>The Name Must Be Gretar Then 3 charachters</Text>
+            </View>
+            <Pressable
+              style={styles.warningbutton1}
+              android_ripple={{ color: 'white' }}
+              onPress={() => setShowWarning(false)}
+            ><Text style={styles.text}>ok</Text></Pressable>
+          </View>
+        </View>
+
+
+      </Modal>
       <Text style={styles.text}>Plese Enter Name:</Text>
       <TextInput style={styles.input}
         placeholder='Enter name'
@@ -94,19 +128,52 @@ const styles = StyleSheet.create({
     backgroundColor: 'darkgray',
     alignItems: 'center',
     justifyContent: 'center',
+
   },
   text: {
     fontSize: 20,
-    fontStyle: 'italic',
+    // fontStyle: 'italic',
     alignItems: 'center',
     color: '#000',
     margin: 10,
+    textAlign: 'center',
   },
   button: {
     backgroundColor: 'green',
     width: 150,
     height: 50,
     alignItems: 'center',
+  },
+  warning_modal: {
+    width: 300,
+    height: 300,
+    backgroundColor: '#fff',
+    borderWidth: 1,
+    borderRadius: 20,
+  },
+  centerpage_view: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#00000099'
+  },
+  warning_title: {
+    height: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'yellow',
+    borderTopRightRadius: 20,
+    borderTopLeftRadius: 20,
+  },
+  warning_body: {
+    height: 200,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  warningbutton1: {
+    backgroundColor: '#00ffff',
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20,
   }
 })
 
