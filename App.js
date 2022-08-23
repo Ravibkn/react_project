@@ -15,7 +15,9 @@ import {
   Pressable,
   Alert,
   ToastAndroid,
-  Modal
+  Modal,
+  Image,
+  ImageBackground,
 } from 'react-native'
 
 const App = () => {
@@ -29,13 +31,13 @@ const App = () => {
     }
   }
   return (
-    <View style={styles.body}>
+    <ImageBackground 
+    source={{uri:'https://cdn.pixabay.com/photo/2013/07/12/12/35/texture-145968_960_720.png'}}
+    style={styles.body}>
       <Modal
         visible={showWarning}
         transparent
         onRequestClose={() => setShowWarning(false)}
-        animationType='slide'
-        hardwareAccelerated
       >
         <View style={styles.centerpage_view}>
           <View style={styles.warning_modal}>
@@ -100,17 +102,30 @@ const App = () => {
       </Pressable>
 
 
-      {submited ? <Text style={styles.text}>
-        Your Name Is:{name}
-      </Text> : null
+      {
+        submited ?
+<View style={styles.body}>
+  <Text style={styles.text}>
+            Your Name Is:{name}
+          </Text>
+          <Image
+          style={styles.image}
+          source={require('./assets/done.png')}
+          resizeMode='stretch'
+        />
+        </View>: <Image
+            style={styles.image}
+            source={require('./assets/error.png')}
+            resizeMode='stretch'
+          />
       }
 
-    </View>
+    </ImageBackground>
   )
 }
 const styles = StyleSheet.create({
   body: {
-    backgroundColor: 'gray',
+    // backgroundColor: 'gray',
     flex: 1,
     alignItems: 'center',
   },
@@ -174,6 +189,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#00ffff',
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
+  },
+  image: {
+    width: 100,
+    height: 100,
+    margin: 10,
   }
 })
 
