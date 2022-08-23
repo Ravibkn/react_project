@@ -3,22 +3,15 @@ import {
   View,
   Text,
   StyleSheet,
-  ScrollView,
-  Button,
-  RefreshControl,
-  FlatList,
-  SectionList,
-  TextInput, Touchable,
-  TouchableOpacity,
-  TouchableHighlight,
-  TouchableNativeFeedback,
+TextInput,
   Pressable,
-  Alert,
-  ToastAndroid,
+
   Modal,
   Image,
   ImageBackground,
 } from 'react-native'
+import MashButton from "./Custom_button";
+import Header from "./header";
 
 const App = () => {
   const [name, setName] = useState('')
@@ -31,12 +24,15 @@ const App = () => {
     }
   }
   return (
-    <ImageBackground 
-    source={{uri:'https://cdn.pixabay.com/photo/2013/07/12/12/35/texture-145968_960_720.png'}}
-    style={styles.body}>
+    <ImageBackground
+      source={{ uri: 'https://cdn.pixabay.com/photo/2013/07/12/12/35/texture-145968_960_720.png' }}
+      style={styles.body}>
+    
+    <Header />
       <Modal
         visible={showWarning}
         transparent
+        animationType="slide"
         onRequestClose={() => setShowWarning(false)}
       >
         <View style={styles.centerpage_view}>
@@ -92,28 +88,32 @@ const App = () => {
        
       </TouchableNativeFeedback> */}
 
-      <Pressable
-        onPress={onPrssedHendler}
-        android_ripple={{ color: '#00f' }}
-        style={({ pressed }) => [{ backgroundColor: pressed ? '#dddddd' : 'green' },
-        styles.button]}>
+      <MashButton
+        onPressFunction={onPrssedHendler}
+        title={submited ? 'clear' : 'Submit'}
+        color={'#ff00ff'}
+      />
+      <MashButton
+        onPressFunction={onPrssedHendler}
+        title={'Test'}
+        color={'#00ffff'}
+        style={{ margin: 10 }}
+      />
 
-        <Text style={styles.text}>{submited ? 'clear' : 'Submit'}</Text>
-      </Pressable>
 
 
       {
         submited ?
-<View style={styles.body}>
-  <Text style={styles.text}>
-            Your Name Is:{name}
-          </Text>
-          <Image
-          style={styles.image}
-          source={require('./assets/done.png')}
-          resizeMode='stretch'
-        />
-        </View>: <Image
+          <View style={styles.body}>
+            <Text style={styles.text}>
+              Your Name Is:{name}
+            </Text>
+            <Image
+              style={styles.image}
+              source={require('./assets/done.png')}
+              resizeMode='stretch'
+            />
+          </View> : <Image
             style={styles.image}
             source={require('./assets/error.png')}
             resizeMode='stretch'
