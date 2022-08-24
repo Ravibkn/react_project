@@ -1,200 +1,69 @@
-import React, { useState } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-TextInput,
-  Pressable,
+import React from "react";
+import {View,Text,StyleSheet,Pressable}from 'react-native'
 
-  Modal,
-  Image,
-  ImageBackground,
-} from 'react-native'
-import MashButton from "./Custom_button";
-import Header from "./header";
+import {NavigationContainer}from '@react-navigation/native';
+import {createStackNavigator}from '@react-navigation/stack';
+import { State } from "react-native-gesture-handler";
 
-const App = () => {
-  const [name, setName] = useState('')
-  const [submited, setSubmited] = useState(false)
-  const [showWarning, setShowWarning] = useState(false)
-  const onPrssedHendler = () => {
-    if (name.length > 3) { setSubmited(!submited); }
-    else {
-      setShowWarning(true)
-    }
-  }
+const Stack= createStackNavigator();
+
+function ScreenA({navigation}){
+       const onPressHandler=()=>{
+        navigation.navigate('Screen_B')
+       }
   return (
-    <ImageBackground
-      source={{ uri: 'https://cdn.pixabay.com/photo/2013/07/12/12/35/texture-145968_960_720.png' }}
-      style={styles.body}>
-    
-    <Header />
-      <Modal
-        visible={showWarning}
-        transparent
-        animationType="slide"
-        onRequestClose={() => setShowWarning(false)}
-      >
-        <View style={styles.centerpage_view}>
-          <View style={styles.warning_modal}>
-            <View style={styles.warning_title}><Text style={styles.text}>Warning!</Text>
-            </View>
-            <View style={styles.warning_body}>
-              <Text style={styles.text}>The Name Must Be Gretar Then 3 charachters</Text>
-            </View>
-            <Pressable
-              style={styles.warningbutton1}
-              android_ripple={{ color: 'white' }}
-              onPress={() => setShowWarning(false)}
-            ><Text style={styles.text}>ok</Text></Pressable>
-          </View>
-        </View>
-
-
-      </Modal>
-      <Text style={styles.text}>Plese Enter Name:</Text>
-      <TextInput style={styles.input}
-        placeholder='Enter name'
-        onChangeText={(value) => setName(value)}
-        keyboardType='numbers-and-punctuation'
-        secureTextEntry
-      >
-      </TextInput>
-      {/* <Button title={submited ? 'clear' : 'Submit'}
-        onPress={onPrssedHendler}
-        color='#00f'>
-      </Button> */}
-      {/* <TouchableOpacity
-      style={styles.button}
-      onPress={onPrssedHendler}
-      >
-        <Text style={styles.text}>{submited? 'clear':'Submit'}</Text>
-      </TouchableOpacity> */}
-      {/* <TouchableHighlight
-      style={styles.button}
-      onPress={onPrssedHendler}
-      underlayColor='#dddddd'
-      >
-        <Text style={styles.text}>{submited? 'clear':'Submit'}</Text>
-      </TouchableHighlight> */}
-      {/* <TouchableNativeFeedback
-     
-      onPress={onPrssedHendler}
-      underlayColor='#dddddd'
-      >
-        <View  style={styles.button}>
-        <Text style={styles.text}>{submited? 'clear':'Submit'}</Text>
-        </View>
-       
-      </TouchableNativeFeedback> */}
-
-      <MashButton
-        onPressFunction={onPrssedHendler}
-        title={submited ? 'clear' : 'Submit'}
-        color={'#ff00ff'}
-      />
-      <MashButton
-        onPressFunction={onPrssedHendler}
-        title={'Test'}
-        color={'#00ffff'}
-        style={{ margin: 10 }}
-      />
-
-
-
-      {
-        submited ?
-          <View style={styles.body}>
-            <Text style={styles.text}>
-              Your Name Is:{name}
-            </Text>
-            <Image
-              style={styles.image}
-              source={require('./assets/done.png')}
-              resizeMode='stretch'
-            />
-          </View> : <Image
-            style={styles.image}
-            source={require('./assets/error.png')}
-            resizeMode='stretch'
-          />
-      }
-
-    </ImageBackground>
+    <View style={styles.body}>
+     <Text style={styles.text}>Screen A</Text>
+     <Pressable onPress={onPressHandler}
+     style={({pressed})=>({backgroundColor:pressed? '#fff':'#0ff'})}>
+      <Text style={styles.text}>Go To Screen B</Text>
+     </Pressable>
+    </View>
   )
 }
-const styles = StyleSheet.create({
-  body: {
-    // backgroundColor: 'gray',
-    flex: 1,
-    alignItems: 'center',
-  },
-  input: {
-    borderWidth: 1,
-    width: 200,
-    borderColor: 'white',
-    borderRadius: 10,
-    textAlign: 'center',
-    fontSize: 20,
-    margin: 10,
-  },
-  item: {
-    margin: 10,
-    backgroundColor: 'darkgray',
-    alignItems: 'center',
-    justifyContent: 'center',
+function ScreenB({navigation}){
+  const onPressHandler=()=>{
+    navigation.navigate('Screen_A')
+   }
+  return (
+    <View style={styles.body}>
+     <Text style={styles.text}>Screen B</Text>
+     <Pressable onPress={onPressHandler}
+     style={({pressed})=>({backgroundColor:pressed? '#fff':'#0ff'})}>
+      <Text style={styles.text}>Go To Screen A</Text>
+     </Pressable>
+    </View>
+  )
+}
 
+
+function App(){
+ return (
+  <NavigationContainer>
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Screen_A"
+        component={ScreenA}/>
+        <Stack.Screen
+        name="Screen_B"
+        component={ScreenB}/>
+    </Stack.Navigator>
+  </NavigationContainer>
+ )
+}
+
+const styles = StyleSheet.create({
+  body:{
+    flex:1,
+    alignItems:'center',
+    justifyContent:'center'
   },
-  text: {
-    fontSize: 20,
-    // fontStyle: 'italic',
-    alignItems: 'center',
-    color: '#000',
-    margin: 10,
-    textAlign: 'center',
-  },
-  button: {
-    backgroundColor: 'green',
-    width: 150,
-    height: 50,
-    alignItems: 'center',
-  },
-  warning_modal: {
-    width: 300,
-    height: 300,
-    backgroundColor: '#fff',
-    borderWidth: 1,
-    borderRadius: 20,
-  },
-  centerpage_view: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#00000099'
-  },
-  warning_title: {
-    height: 50,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'yellow',
-    borderTopRightRadius: 20,
-    borderTopLeftRadius: 20,
-  },
-  warning_body: {
-    height: 200,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  warningbutton1: {
-    backgroundColor: '#00ffff',
-    borderBottomLeftRadius: 20,
-    borderBottomRightRadius: 20,
-  },
-  image: {
-    width: 100,
-    height: 100,
-    margin: 10,
-  }
+ text:{
+  fontSize:40,
+  fontWeight:'bold',
+  margin:10,
+  color:'#000'
+ }
 })
 
 export default App;
